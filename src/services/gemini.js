@@ -23,7 +23,7 @@ export async function generateContent(prompt) {
     })
   } catch (error) {
     if (error.name === 'TimeoutError') {
-      throw new Error(`No response from ${MODEL} after ${TIMEOUT_MS / 1000}s. The model may be overloaded, try again or switch VITE_GEMINI_MODEL.`)
+      throw new Error(`No response from ${MODEL} after ${TIMEOUT_MS / 1000}s. The model may be overloaded, try again or switch VITE_GEMINI_MODEL.`, { cause: error })
     }
     throw error
   }

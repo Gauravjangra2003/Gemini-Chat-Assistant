@@ -1,30 +1,19 @@
 import { useState } from 'react'
-import { generateContent } from '../services/gemini'
 
-function ChatInput() {
+function ChatInput({ onSend, loading }) {
   const [question, setQuestion] = useState('')
-  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     const prompt = question.trim()
     if (!prompt || loading) return
 
-    setLoading(true)
-    console.log('Question:', prompt)
-    try {
-      const answer = await generateContent(prompt)
-      console.log('Gemini answer:', answer)
-      setQuestion('')
-    } catch (error) {
-      console.error('Gemini error:', error.message)
-    } finally {
-      setLoading(false)
-    }
+    setQuestion('')
+    onSend(prompt)
   }
 
   return (
-    <div className="px-2 pb-2 pt-2 sm:px-8 sm:pb-8 sm:pt-4">
+    <div className="border-t border-gray-100 px-2 pb-2 pt-2 sm:px-6 sm:pb-5 sm:pt-4">
       <form
         onSubmit={handleSubmit}
         className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-200 p-2 sm:p-3 flex items-center gap-2 sm:gap-3"
@@ -35,12 +24,11 @@ function ChatInput() {
           placeholder="Type your question here..."
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          disabled={loading}
         />
         <button
           type="submit"
           disabled={loading || !question.trim()}
-          className="h-11 sm:h-12 px-4 sm:px-7 shrink-0 rounded-xl bg-blue-600 text-white font-semibold text-base shadow-md hover:bg-blue-700 active:scale-95 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
+          className="h-11 sm:h-12 px-4 sm:px-7 shrink-0 rounded-xl bg-blue-600 text-white font-semibold text-base shadow-md hover:bg-blue-700 active:scale-95 transition cursor-pointer disabled:bg-gray-300 disabled:text-gray-500 disabled:shadow-none disabled:cursor-not-allowed disabled:active:scale-100"
         >
           {loading ? 'Sending...' : 'Send'}
         </button>
