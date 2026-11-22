@@ -1,4 +1,5 @@
 import { SignIn, SignUp } from '@clerk/react'
+import AppPreview from './AppPreview'
 
 const FEATURES = [
   'Ask anything and get instant AI answers',
@@ -15,7 +16,7 @@ function AuthPage() {
 
   return (
     <div className="min-h-dvh flex bg-gray-100">
-      <section className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-gradient-to-br from-blue-600 to-blue-800 text-white p-12">
+      <section className="hidden lg:flex lg:w-1/2 flex-col justify-between gap-8 bg-gradient-to-br from-blue-600 to-blue-800 text-white p-10 xl:p-12 overflow-hidden">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-white text-blue-600 font-bold flex items-center justify-center shadow-md">
             AI
@@ -24,12 +25,15 @@ function AuthPage() {
         </div>
 
         <div>
-          <h1 className="text-4xl font-bold leading-tight">
+          <h1 className="text-3xl xl:text-4xl font-bold leading-tight">
             Your personal AI assistant,
             <br />
             ready when you are.
           </h1>
-          <ul className="mt-8 space-y-4">
+          <div className="mt-10 mb-12 flex justify-center">
+            <AppPreview />
+          </div>
+          <ul className="space-y-3">
             {FEATURES.map((feature) => (
               <li key={feature} className="flex items-center gap-3 text-blue-50">
                 <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm">✓</span>
