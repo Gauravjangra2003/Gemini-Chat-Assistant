@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import ChatInput from './ChatInput'
 import Message, { TypingIndicator } from './Message'
 
-function ChatArea({ messages, loading, onSend }) {
+function ChatArea({ messages, loading, disabled, onSend }) {
   const bottomRef = useRef(null)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function ChatArea({ messages, loading, onSend }) {
           </div>
         )}
       </div>
-      <ChatInput onSend={onSend} loading={loading} />
+      <ChatInput onSend={onSend} loading={disabled} />
     </main>
   )
 }
