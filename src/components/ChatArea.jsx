@@ -1,33 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import ChatInput from './ChatInput'
 import Message, { TypingIndicator } from './Message'
-import { generateContent } from '../services/gemini'
 
-function ChatArea() {
-  const [messages, setMessages] = useState([])
-  const [loading, setLoading] = useState(false)
+function ChatArea({ messages, loading, onSend }) {
   const bottomRef = useRef(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
-
-  const handleSend = async (prompt) => {
-    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'user', text: prompt }])
-    setLoading(true)
-    try {
-      const answer = await generateContent(prompt)
-      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: answer }])
-    } catch (error) {
-      console.error('Gemini error:', error.message)
-      setMessages((prev) => [
-        ...prev,
-        { id: crypto.randomUUID(), role: 'assistant', text: error.message, isError: true },
-      ])
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <main className="flex-1 min-w-0 bg-white rounded-2xl border border-gray-200 shadow-sm flex flex-col overflow-hidden">
@@ -50,7 +30,7 @@ function ChatArea() {
           </div>
         )}
       </div>
-      <ChatInput onSend={handleSend} loading={loading} />
+      <ChatInput onSend={onSend} loading={loading} />
     </main>
   )
 }

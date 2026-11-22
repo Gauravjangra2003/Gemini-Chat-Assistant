@@ -1,4 +1,4 @@
-function Header({ showHistory, onToggleHistory }) {
+function Header({ showHistory, onToggleHistory, onClearAll, canClear }) {
   return (
     <header className="h-14 sm:h-16 shrink-0 bg-white border-b border-gray-200 px-3 sm:px-6 flex items-center justify-between gap-2">
       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -17,7 +17,9 @@ function Header({ showHistory, onToggleHistory }) {
           <span className="hidden sm:inline">{showHistory ? 'Hide History' : 'Show History'}</span>
         </button>
         <button
-          className="px-3 sm:px-4 py-2 rounded-lg text-red-500 text-sm font-medium hover:bg-red-50 active:scale-95 transition cursor-pointer"
+          onClick={onClearAll}
+          disabled={!canClear}
+          className="px-3 sm:px-4 py-2 rounded-lg text-red-500 text-sm font-medium hover:bg-red-50 active:scale-95 transition cursor-pointer disabled:text-gray-300 disabled:hover:bg-transparent disabled:cursor-not-allowed disabled:active:scale-100"
         >
           <span className="sm:hidden">Clear</span>
           <span className="hidden sm:inline">Clear All</span>
