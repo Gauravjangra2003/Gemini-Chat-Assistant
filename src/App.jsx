@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useUser } from '@clerk/react'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import ChatArea from './components/ChatArea'
@@ -7,15 +8,15 @@ import { loadChats, saveChats } from './utils/chatStorage'
 
 const isDesktop = () => window.matchMedia('(min-width: 768px)').matches
 
-function App() {
+function ChatApp({ userId }) {
   const [showHistory, setShowHistory] = useState(isDesktop)
-  const [chats, setChats] = useState(loadChats)
+  const [chats, setChats] = useState(() => loadChats(userId))
   const [activeChatId, setActiveChatId] = useState(null)
   const [pendingChatId, setPendingChatId] = useState(null)
 
   useEffect(() => {
-    saveChats(chats)
-  }, [chats])
+    saveChats(userId, chats)
+  }, [userId, chats])
 
   const activeChat = chats.find((chat) => chat.id === activeChatId)
   const messages = activeChat?.messages ?? []
@@ -115,6 +116,13 @@ function App() {
       </div>
     </div>
   )
+}
+
+function App() {
+  const { user } = useUser()
+  if (!user) return null
+
+  return <ChatApp key={user.id} userId={user.id} />
 }
 
 export default App

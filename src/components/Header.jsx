@@ -1,3 +1,5 @@
+import { UserButton } from '@clerk/react'
+
 function Header({ showHistory, onToggleHistory, onClearAll, canClear }) {
   return (
     <header className="h-14 sm:h-16 shrink-0 bg-white border-b border-gray-200 px-3 sm:px-6 flex items-center justify-between gap-2">
@@ -24,6 +26,9 @@ function Header({ showHistory, onToggleHistory, onClearAll, canClear }) {
           <span className="sm:hidden">Clear</span>
           <span className="hidden sm:inline">Clear All</span>
         </button>
+        <div className="ml-1 sm:ml-2 flex items-center">
+          <UserButton />
+        </div>
       </div>
     </header>
   )

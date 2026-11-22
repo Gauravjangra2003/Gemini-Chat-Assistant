@@ -1,14 +1,14 @@
-const STORAGE_KEY = 'ai-assistant-chats'
+const storageKey = (userId) => `ai-assistant-chats:${userId}`
 
-export function loadChats() {
+export function loadChats(userId) {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY))
+    const saved = JSON.parse(localStorage.getItem(storageKey(userId)))
     return Array.isArray(saved) ? saved : []
   } catch {
     return []
   }
 }
 
-export function saveChats(chats) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(chats))
+export function saveChats(userId, chats) {
+  localStorage.setItem(storageKey(userId), JSON.stringify(chats))
 }
